@@ -8,8 +8,7 @@
     $('body').on('click','#evenButton',checkEven);
   }
 
-  function checkEven(){
-    debugger;
+  function checkEven(){ 
     var input = $('#input').val();
     var inputArray = input.split(',');    //creates an array out of the user's input
     var fullArray = makeArray((inputArray[0] *1),(inputArray[1] *1));    //puts the user's input into the function, makeArray
