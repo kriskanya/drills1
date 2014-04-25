@@ -39,8 +39,6 @@
     for(var i = 0; i < arrayInput.length; i++){
       if(arrayInput[i]%2 === 1){
         newArray.push(arrayInput[i] * 1);
-      } else{
-        console.log('');
       }
     }
     return newArray;
