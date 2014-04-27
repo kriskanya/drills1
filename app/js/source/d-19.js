@@ -4,52 +4,34 @@
   $(document).ready(init);
 
     function init(){
-      $('#get').click(buildArray);
+      $('#get').click(clickSum);
     }
 
-    // function getAutoUpdate(){
-    //   buildArray();
-    // }
-
-    function buildArray(){
-      $('#symbol').val().toUpperCase().split(',').map(fixSpacing).forEach(getURL);    //in order to use map, you must have a function that returns something
+    function clickSum(){
+      $('#symbols').val().split(',').map(stripUC).forEach(getQuote);
     }
 
-    function getURL(input){
-      var passInURL = 'http://dev.markitondemand.com/Api/v2/Quote/jsonp?symbol='+input+'&callback=?';
-      $.getJSON(passInURL, createTRs);    //calls createTRs and passes in 'data' that's being returned from AJAX request
+    function url(symbol){
+      return 'http://dev.markitondemnad...' + symbol + '&callback=?';
     }
 
-    // function getStock(passInURL){
-    //
-    // }
-
-    function createTRs(data){
-      var $tr = $('<tr>');
-      $('tbody').append($tr);
-
-      var $td1 = $('<td>');
-      $td1.text(data.Symbol);
-      var $td2 = $('<td id = ' + data.Symbol + '>');
-      $td2.text(data.LastPrice);
-
-      ($tr).append($td1);
-      ($tr).append($td2);
-
-      stockTimer(data);
+    function stripUC(symbol){
+      return symbol.trim().toUpperCase();    //convert array of symbols to an array of URLs
     }
 
-    function fixSpacing(input){
-      for(var i = 0; i < input.length; i++){
-        return input.trim();
-      }
-    }
+    var sum = 0;
+    var count = 0;
+    function getQuote(url, index, urls){
+      $.getJSON(url, function(){
+        sum = 0;  //need to reset this to zero, if you want to run it again
+        count = 0;
 
-    function stockTimer(data){
-      setInterval(function(){
-        $('#' + data.Symbol).text(data.LastPrice);
-
-      }, 1000);
+        sum += quote.LastPrice;
+        count++
+        if(count === urls.length){
+        $('#result').text(sum);
+        }
+      });
     }
 
 
